@@ -12,7 +12,7 @@ class _AddMedicineState extends State<AddMedicine> {
   final TextEditingController _medicineNameController = TextEditingController();
   final TextEditingController _medicineDescController = TextEditingController();
   final TextEditingController _medicinePriceController = TextEditingController();
-  final CollectionReference medicines = FirebaseFirestore.instance.collection('medicines');
+  final CollectionReference medicines = FirebaseFirestore.instance.collection('Medicine');
   String? documentId;
 
   @override
