@@ -10,12 +10,12 @@ class MyMedicine extends StatefulWidget {
 
 class _MyMedicineState extends State<MyMedicine> {
   Stream<QuerySnapshot> medicines =
-      FirebaseFirestore.instance.collection("medicines").snapshots();
+      FirebaseFirestore.instance.collection("Medicine").snapshots();
 
   // Method to delete medicine
   void deleteMedicine(String documentId) async {
     await FirebaseFirestore.instance
-        .collection('medicines')
+        .collection('Medicine')
         .doc(documentId)
         .delete();
 
