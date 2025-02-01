@@ -29,12 +29,20 @@ class _MyMedicineState extends State<MyMedicine> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    // Adjust number of columns based on screen size
+    int crossAxisCount = screenWidth < 600 ? 2 : 4;  // Use 2 columns on small screens, 4 on large screens
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Available Medicines"),
+        title: const Text(
+          "Available Medicines",
+          style: TextStyle(fontSize: 24), // Increased font size for app bar title
+        ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.add, size: 30),
+            icon: const Icon(Icons.add, size: 35),  // Increased icon size
             onPressed: () {
               Navigator.pushNamed(context, "/addmedicine");
             },
@@ -52,13 +60,13 @@ class _MyMedicineState extends State<MyMedicine> {
           }
 
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(6.0),
             child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, 
-                crossAxisSpacing: 8, 
-                mainAxisSpacing: 8,
-                childAspectRatio: 0.6, 
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
+                crossAxisSpacing: 6,
+                mainAxisSpacing: 6,
+                childAspectRatio: 1.9, // Adjust child aspect ratio based on screen size
               ),
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
@@ -66,64 +74,83 @@ class _MyMedicineState extends State<MyMedicine> {
 
                 return Card(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(6),
                   ),
-                  elevation: 4,
+                  elevation: 2,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                    padding: const EdgeInsets.all(4),
                     child: Column(
-                      mainAxisSize: MainAxisSize.min, // Adjusts height dynamically
+                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
-                            const Icon(Icons.medical_services, size: 28, color: Colors.blue),
+                            const Icon(
+                              Icons.medical_services,
+                              size: 24, // Increased icon size
+                              color: Colors.blue,
+                            ),
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
                                 doc["Title"],
-                                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                  fontSize: 16, // Increased font size
+                                  fontWeight: FontWeight.bold,
+                                ),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 6),
-
+                        const SizedBox(height: 8),
                         Text(
                           doc["Description"],
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 10, color: Colors.black54),
-                        ),
-                        const SizedBox(height: 6),
-
-                        Text(
-                          "\$${doc["Price"].toString()}",
-                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.green),
+                          style: const TextStyle(
+                            fontSize: 12, // Increased font size
+                            color: Colors.black54,
+                          ),
                         ),
                         const SizedBox(height: 8),
-
+                        Text(
+                          "\$${doc["Price"].toString()}",
+                          style: const TextStyle(
+                            fontSize: 14, // Increased font size
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             ElevatedButton(
                               onPressed: () => updateMedicine(doc.id),
                               style: ElevatedButton.styleFrom(
-                                foregroundColor: Colors.black, 
+                                foregroundColor: Colors.black,
                                 backgroundColor: Colors.grey[300],
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 30, vertical: 6), // Increased padding
                               ),
-                              child: const Text("Update", style: TextStyle(fontSize: 10)),
+                              child: const Text(
+                                "Update",
+                                style: TextStyle(fontSize: 14), // Increased font size
+                              ),
                             ),
                             ElevatedButton(
                               onPressed: () => deleteMedicine(doc.id),
                               style: ElevatedButton.styleFrom(
-                                foregroundColor: Colors.black, 
+                                foregroundColor: Colors.black,
                                 backgroundColor: Colors.red[300],
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 30, vertical: 6), // Increased padding
                               ),
-                              child: const Text("Delete", style: TextStyle(fontSize: 10)),
+                              child: const Text(
+                                "Delete",
+                                style: TextStyle(fontSize: 14), // Increased font size
+                              ),
                             ),
                           ],
                         ),
